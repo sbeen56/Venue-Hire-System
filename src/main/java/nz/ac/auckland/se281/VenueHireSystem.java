@@ -13,7 +13,12 @@ public class VenueHireSystem {
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
+    if (venueName.isEmpty()) {
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
+    }
+    else {
+      MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
+    }
   }
 
   public void setSystemDate(String dateInput) {
