@@ -19,6 +19,9 @@ public class VenueHireSystem {
     else if (capacityInput.charAt(0) == '-') {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
     }
+    else if (!isNumber(hireFeeInput)) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
+    }
     else {
       MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
     }
@@ -54,5 +57,15 @@ public class VenueHireSystem {
 
   public void viewInvoice(String bookingReference) {
     // TODO implement this method
+  }
+
+  public boolean isNumber(String stringToCheck) { 
+    try {  
+      Integer.parseInt(stringToCheck);
+      return true;
+    }
+    catch (NumberFormatException e) {  
+      return false;  
+    }  
   }
 }
