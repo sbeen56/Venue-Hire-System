@@ -20,4 +20,12 @@ public class Venue {
       + capacity + " people - $" 
       + hireFee + " base hire fee. Next available on %s");
   }
+
+  public boolean isSameCode(String venueToCompare) {
+    return this.code.equals(venueToCompare);
+  }
+
+  public String getName() {
+    return name;
+  }
 }

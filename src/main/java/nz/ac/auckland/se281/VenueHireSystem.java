@@ -38,7 +38,7 @@ public class VenueHireSystem {
     else if (!isNumber(hireFeeInput)) {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
     }
-    else {
+    else if (noDuplicateCodeExists(venueCode)) {
       Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
       venueList.add(newVenue);
       MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
@@ -115,5 +115,15 @@ public class VenueHireSystem {
     else {
       return "s";
     }
+  }
+
+  private boolean noDuplicateCodeExists(String venueCode) {
+    for (Venue venue : venueList) {
+      if (venue.isSameCode(venueCode)) {
+        MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.getName());
+        return false;
+      }
+    }
+    return true;
   }
 }
