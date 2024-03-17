@@ -1,14 +1,22 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
+  private ArrayList<Venue> venueList = new ArrayList<Venue>();
 
   public VenueHireSystem() {}
 
   public void printVenues() {
-    System.out.println("There are no venues in the system. Please create a venue first.");
+    if (venueList.isEmpty()) {
+      MessageCli.NO_VENUES.printMessage();
+    }
+    else {
+      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+    }
   }
 
   public void createVenue(
@@ -23,8 +31,12 @@ public class VenueHireSystem {
       MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
     }
     else {
+      Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
+      venueList.add(newVenue);
       MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
     }
+
+
   }
 
   public void setSystemDate(String dateInput) {
