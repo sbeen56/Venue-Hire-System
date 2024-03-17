@@ -29,22 +29,14 @@ public class VenueHireSystem {
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    if (venueName.isEmpty()) {
-      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
-    }
-    else if (capacityInput.charAt(0) == '-') {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("capacity", " positive");
-    }
-    else if (!isNumber(hireFeeInput)) {
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage("hire fee", "");
-    }
-    else if (noDuplicateCodeExists(venueCode)) {
+    if (nameIsNotEmpty(venueName) 
+        && isPositiveNumber(capacityInput, "capacity") 
+        && isPositiveNumber(hireFeeInput, "hire fee") 
+        && noDuplicateCodeExists(venueCode)) {
       Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
       venueList.add(newVenue);
       MessageCli.VENUE_SUCCESSFULLY_CREATED.printMessage(venueName, venueCode);
     }
-
-
   }
 
   public void setSystemDate(String dateInput) {
@@ -79,14 +71,19 @@ public class VenueHireSystem {
     // TODO implement this method
   }
 
-  private boolean isNumber(String stringToCheck) { 
+  private boolean isPositiveNumber(String stringToCheck, String propartyName) { 
     try {  
-      Integer.parseInt(stringToCheck);
+      int parsedNumber = Integer.parseInt(stringToCheck);
+      if (parsedNumber <= 0) {
+        MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(propartyName, " positive");
+        return false;
+      }
       return true;
     }
-    catch (NumberFormatException e) {  
+    catch (NumberFormatException e) { 
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(propartyName, ""); 
       return false;  
-    }  
+    }      
   }
 
   private String getIsOrAre(int venueListSize) {
@@ -123,6 +120,14 @@ public class VenueHireSystem {
         MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.printMessage(venueCode, venue.getName());
         return false;
       }
+    }
+    return true;
+  }
+
+  private boolean nameIsNotEmpty(String venueName) {
+    if (venueName.isEmpty()) {
+      MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
+      return false;
     }
     return true;
   }
