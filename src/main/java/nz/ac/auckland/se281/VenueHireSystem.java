@@ -22,7 +22,7 @@ public class VenueHireSystem {
       MessageCli.NUMBER_VENUES.printMessage(isOrAre, quantity, singularOrPlural);
 
       for (Venue venue : venueList) {
-        venue.PrintDetails();
+        venue.printDetails();
       }
     }
   }
