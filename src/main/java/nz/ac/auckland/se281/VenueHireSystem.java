@@ -20,6 +20,10 @@ public class VenueHireSystem {
       String quantity = getQuantityString(venueListSize);
       String singularOrPlural = getSingularOrPlural(venueListSize);
       MessageCli.NUMBER_VENUES.printMessage(isOrAre, quantity, singularOrPlural);
+
+      for (Venue venue : venueList) {
+        venue.PrintDetails();
+      }
     }
   }
 
