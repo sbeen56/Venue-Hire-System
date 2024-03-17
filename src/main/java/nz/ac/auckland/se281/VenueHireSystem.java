@@ -71,7 +71,7 @@ public class VenueHireSystem {
     // TODO implement this method
   }
 
-  public boolean isNumber(String stringToCheck) { 
+  private boolean isNumber(String stringToCheck) { 
     try {  
       Integer.parseInt(stringToCheck);
       return true;
