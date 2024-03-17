@@ -15,7 +15,11 @@ public class VenueHireSystem {
       MessageCli.NO_VENUES.printMessage();
     }
     else {
-      MessageCli.NUMBER_VENUES.printMessage("is", "one", "");
+      int venueListSize = venueList.size();
+      String isOrAre = getIsOrAre(venueListSize);
+      String quantity = getQuantityString(venueListSize);
+      String singularOrPlural = getSingularOrPlural(venueListSize);
+      MessageCli.NUMBER_VENUES.printMessage(isOrAre, quantity, singularOrPlural);
     }
   }
 
@@ -79,5 +83,33 @@ public class VenueHireSystem {
     catch (NumberFormatException e) {  
       return false;  
     }  
+  }
+
+  private String getIsOrAre(int venueListSize) {
+    if (venueListSize == 1) {
+      return "is";
+    }
+    else {
+      return "are";
+    }
+  }
+
+  private String getQuantityString(int venueListSize) {
+    if (venueListSize < 10) {
+      String[] numberNames = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+      return numberNames[venueListSize - 1];
+    }
+    else {
+      return Integer.toString(venueListSize);
+    }
+  }
+
+  private String getSingularOrPlural(int venueListSize) {
+    if (venueListSize == 1) {
+      return "";
+    }
+    else {
+      return "s";
+    }
   }
 }
