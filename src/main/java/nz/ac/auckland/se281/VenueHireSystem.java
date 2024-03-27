@@ -125,7 +125,7 @@ public class VenueHireSystem {
   }
 
   private boolean nameIsNotEmpty(String venueName) {
-    if (venueName.isEmpty()) {
+    if (venueName.trim().isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return false;
     }
