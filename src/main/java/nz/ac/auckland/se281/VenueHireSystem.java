@@ -1,7 +1,6 @@
 package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
-
 import nz.ac.auckland.se281.Types.CateringType;
 import nz.ac.auckland.se281.Types.FloralType;
 
@@ -13,8 +12,7 @@ public class VenueHireSystem {
   public void printVenues() {
     if (venueList.isEmpty()) {
       MessageCli.NO_VENUES.printMessage();
-    }
-    else {
+    } else {
       int venueListSize = venueList.size();
       String isOrAre = getIsOrAre(venueListSize);
       String quantity = getQuantityString(venueListSize);
@@ -29,9 +27,9 @@ public class VenueHireSystem {
 
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
-    if (nameIsNotEmpty(venueName) 
-        && isPositiveNumber(capacityInput, "capacity") 
-        && isPositiveNumber(hireFeeInput, "hire fee") 
+    if (nameIsNotEmpty(venueName)
+        && isPositiveNumber(capacityInput, "capacity")
+        && isPositiveNumber(hireFeeInput, "hire fee")
         && noDuplicateCodeExists(venueCode)) {
       Venue newVenue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
       venueList.add(newVenue);
@@ -71,36 +69,35 @@ public class VenueHireSystem {
     // TODO implement this method
   }
 
-  private boolean isPositiveNumber(String stringToCheck, String propartyName) { 
-    try {  
+  private boolean isPositiveNumber(String stringToCheck, String propartyName) {
+    try {
       int parsedNumber = Integer.parseInt(stringToCheck);
       if (parsedNumber <= 0) {
         MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(propartyName, " positive");
         return false;
       }
       return true;
+    } catch (NumberFormatException e) {
+      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(propartyName, "");
+      return false;
     }
-    catch (NumberFormatException e) { 
-      MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(propartyName, ""); 
-      return false;  
-    }      
   }
 
   private String getIsOrAre(int venueListSize) {
     if (venueListSize == 1) {
       return "is";
-    }
-    else {
+    } else {
       return "are";
     }
   }
 
   private String getQuantityString(int venueListSize) {
     if (venueListSize < 10) {
-      String[] numberNames = {"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
+      String[] numberNames = {
+        "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
+      };
       return numberNames[venueListSize - 1];
-    }
-    else {
+    } else {
       return Integer.toString(venueListSize);
     }
   }
@@ -108,8 +105,7 @@ public class VenueHireSystem {
   private String getSingularOrPlural(int venueListSize) {
     if (venueListSize == 1) {
       return "";
-    }
-    else {
+    } else {
       return "s";
     }
   }
