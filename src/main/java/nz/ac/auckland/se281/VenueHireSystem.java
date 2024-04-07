@@ -7,6 +7,7 @@ import nz.ac.auckland.se281.Types.FloralType;
 public class VenueHireSystem {
   private ArrayList<Venue> venueList = new ArrayList<Venue>();
   private String systemDate;
+  private ArrayList<Booking> bookingList = new ArrayList<Booking>();
 
   public VenueHireSystem() {}
 
@@ -65,7 +66,9 @@ public class VenueHireSystem {
           break;
         }
       }
-      if (venueName != null) {
+      if (venueName != null && isNotBooked(venueName, options[1])) {
+        Booking newBooking = new Booking(venueName, bookingReference, options[1]);
+        bookingList.add(newBooking);
         MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
             bookingReference, venueName, options[1], options[3]);
       }
@@ -147,6 +150,16 @@ public class VenueHireSystem {
     if (venueName.trim().isEmpty()) {
       MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.printMessage();
       return false;
+    }
+    return true;
+  }
+
+  private boolean isNotBooked(String venueName, String bookingDate) {
+    for (Booking booking : bookingList) {
+      if (booking.isSameBooking(venueName, bookingDate)) {
+        MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.printMessage(venueName, bookingDate);
+        return false;
+      }
     }
     return true;
   }
