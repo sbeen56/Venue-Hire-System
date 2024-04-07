@@ -66,7 +66,7 @@ public class VenueHireSystem {
           break;
         }
       }
-      if (venueName != null && isNotBooked(venueName, options[1])) {
+      if (venueName != null && dateIsNotInPast(options[1]) && isNotBooked(venueName, options[1])) {
         Booking newBooking = new Booking(venueName, bookingReference, options[1]);
         bookingList.add(newBooking);
         MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
@@ -162,5 +162,31 @@ public class VenueHireSystem {
       }
     }
     return true;
+  }
+
+  private boolean dateIsNotInPast(String bookingDate) {
+    String[] bookingDateParts = bookingDate.split("/");
+    int bookingDay = Integer.parseInt(bookingDateParts[0]);
+    int bookingMonth = Integer.parseInt(bookingDateParts[1]);
+    int bookingYear = Integer.parseInt(bookingDateParts[2]);
+
+    String[] systemDateParts = bookingDate.split("/");
+    int systemDay = Integer.parseInt(systemDateParts[0]);
+    int systemMonth = Integer.parseInt(systemDateParts[1]);
+    int systemYear = Integer.parseInt(systemDateParts[2]);
+
+    if (bookingYear > systemYear) {
+      return true;
+    } else if (bookingYear == systemYear) {
+      if (bookingMonth > systemMonth) {
+        return true;
+      } else if (bookingMonth == systemMonth) {
+        if (bookingDay >= systemDay) {
+          return true;
+        }
+      }
+    }
+    MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
+    return false;
   }
 }
