@@ -66,7 +66,9 @@ public class VenueHireSystem {
           break;
         }
       }
-      if (venueName != null && dateIsNotInPast(options[1]) && isNotBooked(venueName, options[1])) {
+      if (isNotNull(venueName, options[0])
+          && dateIsNotInPast(options[1])
+          && isNotBooked(venueName, options[1])) {
         Booking newBooking = new Booking(venueName, bookingReference, options[1]);
         bookingList.add(newBooking);
         MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
@@ -188,5 +190,13 @@ public class VenueHireSystem {
     }
     MessageCli.BOOKING_NOT_MADE_PAST_DATE.printMessage(bookingDate, systemDate);
     return false;
+  }
+
+  private boolean isNotNull(String venueName, String venueCode) {
+    if (venueName == null) {
+      MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.printMessage(venueCode);
+      return false;
+    }
+    return true;
   }
 }
