@@ -60,19 +60,31 @@ public class VenueHireSystem {
     } else {
       String bookingReference = BookingReferenceGenerator.generateBookingReference();
       String venueName = null;
+      int venueCapacity = 0;
       for (Venue venue : venueList) {
         if (venue.isSameCode(options[0])) {
           venueName = venue.getName();
+          venueCapacity = venue.getCapacity();
           break;
         }
       }
       if (isNotNull(venueName, options[0])
           && dateIsNotInPast(options[1])
           && isNotBooked(venueName, options[1])) {
+        int attendees = Integer.parseInt(options[3]);
+        if (attendees > venueCapacity) {
+          attendees = venueCapacity;
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+              options[3], Integer.toString(attendees), Integer.toString(venueCapacity));
+        } else if (attendees < venueCapacity * 0.25) {
+          attendees = (int) (venueCapacity * 0.25);
+          MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
+              options[3], Integer.toString(attendees), Integer.toString(venueCapacity));
+        }
         Booking newBooking = new Booking(venueName, bookingReference, options[1]);
         bookingList.add(newBooking);
         MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
-            bookingReference, venueName, options[1], options[3]);
+            bookingReference, venueName, options[1], Integer.toString(attendees));
       }
     }
   }

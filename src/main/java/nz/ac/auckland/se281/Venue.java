@@ -14,11 +14,16 @@ public class Venue {
   }
 
   public void printDetails() {
-    System.out.println(" * " 
-      + name + " (" 
-      + code + ") - " 
-      + capacity + " people - $" 
-      + hireFee + " base hire fee. Next available on %s");
+    System.out.println(
+        " * "
+            + name
+            + " ("
+            + code
+            + ") - "
+            + capacity
+            + " people - $"
+            + hireFee
+            + " base hire fee. Next available on %s");
   }
 
   public boolean isSameCode(String venueToCompare) {
@@ -27,5 +32,9 @@ public class Venue {
 
   public String getName() {
     return name;
+  }
+
+  public int getCapacity() {
+    return Integer.parseInt(capacity);
   }
 }
