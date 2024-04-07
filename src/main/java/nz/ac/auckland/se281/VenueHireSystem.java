@@ -56,6 +56,19 @@ public class VenueHireSystem {
       MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.printMessage();
     } else if (venueList.isEmpty()) {
       MessageCli.BOOKING_NOT_MADE_NO_VENUES.printMessage();
+    } else {
+      String bookingReference = BookingReferenceGenerator.generateBookingReference();
+      String venueName = null;
+      for (Venue venue : venueList) {
+        if (venue.isSameCode(options[0])) {
+          venueName = venue.getName();
+          break;
+        }
+      }
+      if (venueName != null) {
+        MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
+            bookingReference, venueName, options[1], options[3]);
+      }
     }
   }
 
