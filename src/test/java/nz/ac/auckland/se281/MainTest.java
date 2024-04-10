@@ -710,8 +710,36 @@ public class MainTest {
 
     @Test
     public void T4_01_add_your_own_tests_as_needed() throws Exception {
-      runCommands(PRINT_VENUES);
-      assertContains("There are no venues in the system. Please create a venue first.");
+      // test when date is in past
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "28/05/2023", "client999@email.com", "20")));
+
+      assertDoesNotContain(
+          "Number of attendees adjusted from 20 to 65, as the venue capacity is 260.", true);
+      assertDoesNotContain("Successfully created booking 'HUD14D8O'", true);
+      assertContains("Booking not made");
+      assertContains("Booking not made: '28/05/2023' is in the past (system date is 26/02/2024).");
+    }
+
+    @Test
+    public void T4_02_add_your_own_tests_as_needed() throws Exception {
+      // test when date is not in the past
+      runCommands(
+          unpack(
+              CREATE_TEN_VENUES,
+              SET_DATE,
+              "26/02/2024", //
+              MAKE_BOOKING,
+              options("GGG", "28/05/2025", "client999@email.com", "20")));
+
+      assertContains("Number of attendees adjusted from 20 to 65, as the venue capacity is 260.");
+      assertContains("Successfully created booking 'HUD14D8O'");
+      assertDoesNotContain("Booking not made", true);
     }
   }
 

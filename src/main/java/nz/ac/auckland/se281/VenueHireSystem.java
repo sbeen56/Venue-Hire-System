@@ -184,7 +184,7 @@ public class VenueHireSystem {
     int bookingMonth = Integer.parseInt(bookingDateParts[1]);
     int bookingYear = Integer.parseInt(bookingDateParts[2]);
 
-    String[] systemDateParts = bookingDate.split("/");
+    String[] systemDateParts = systemDate.split("/");
     int systemDay = Integer.parseInt(systemDateParts[0]);
     int systemMonth = Integer.parseInt(systemDateParts[1]);
     int systemYear = Integer.parseInt(systemDateParts[2]);
