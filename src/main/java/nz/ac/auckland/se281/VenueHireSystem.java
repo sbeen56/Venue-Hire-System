@@ -22,7 +22,11 @@ public class VenueHireSystem {
       MessageCli.NUMBER_VENUES.printMessage(isOrAre, quantity, singularOrPlural);
 
       for (Venue venue : venueList) {
-        venue.printDetails(nextAvailableDate(venue.getName()));
+        if (systemDate == null) {
+          venue.printDetails("");
+        } else {
+          venue.printDetails(nextAvailableDate(venue.getName()));
+        }
       }
     }
   }
