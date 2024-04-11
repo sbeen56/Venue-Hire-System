@@ -126,7 +126,10 @@ public class VenueHireSystem {
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    if (!bookingReferenceExists(bookingReference)) {
+    if (bookingReferenceExists(bookingReference)) {
+      String service = "Floral (" + floralType.getName() + ")";
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(service, bookingReference);
+    } else {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Floral", bookingReference);
     }
   }
