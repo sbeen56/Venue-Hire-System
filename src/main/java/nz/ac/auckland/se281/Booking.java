@@ -14,4 +14,8 @@ public class Booking {
   public Boolean isSameBooking(String venueName, String bookingDate) {
     return this.venueName.equals(venueName) && this.bookingDate.equals(bookingDate);
   }
+
+  public String getBookingDate() {
+    return bookingDate;
+  }
 }

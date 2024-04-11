@@ -22,7 +22,7 @@ public class VenueHireSystem {
       MessageCli.NUMBER_VENUES.printMessage(isOrAre, quantity, singularOrPlural);
 
       for (Venue venue : venueList) {
-        venue.printDetails();
+        venue.printDetails(nextAvailableDate());
       }
     }
   }
@@ -210,5 +210,45 @@ public class VenueHireSystem {
       return false;
     }
     return true;
+  }
+
+  private String increaseDate(String dateToIncrease) {
+    String[] dateToIncreaseParts = dateToIncrease.split("/");
+    int dateToIncreaseDay = Integer.parseInt(dateToIncreaseParts[0]);
+    int dateToIncreaseMonth = Integer.parseInt(dateToIncreaseParts[1]);
+    int dateToIncreaseYear = Integer.parseInt(dateToIncreaseParts[2]);
+
+    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30};
+
+    dateToIncreaseDay++;
+    if (dateToIncreaseDay > daysInMonth[dateToIncreaseMonth - 1]) {
+      dateToIncreaseDay = 1;
+      dateToIncreaseMonth++;
+      if (dateToIncreaseMonth > 12) {
+        dateToIncreaseMonth = 1;
+        dateToIncreaseYear++;
+      }
+    }
+
+    String nextDate = dateToIncreaseDay + "/" + dateToIncreaseMonth + "/" + dateToIncreaseYear;
+    return nextDate;
+  }
+
+  private String nextAvailableDate() {
+    boolean dateAvailability = false;
+    String nextAvailableDate = systemDate;
+
+    while (!dateAvailability) {
+      dateAvailability = true;
+      for (Booking booking : bookingList) {
+        if (booking.getBookingDate().equals(nextAvailableDate)) {
+          dateAvailability = false;
+          nextAvailableDate = increaseDate(nextAvailableDate);
+          break;
+        }
+      }
+    }
+
+    return nextAvailableDate;
   }
 }

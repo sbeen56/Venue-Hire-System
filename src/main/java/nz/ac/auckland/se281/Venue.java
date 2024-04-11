@@ -13,17 +13,8 @@ public class Venue {
     this.hireFee = hireFee;
   }
 
-  public void printDetails() {
-    System.out.println(
-        " * "
-            + name
-            + " ("
-            + code
-            + ") - "
-            + capacity
-            + " people - $"
-            + hireFee
-            + " base hire fee. Next available on %s");
+  public void printDetails(String nextDate) {
+    MessageCli.VENUE_ENTRY.printMessage(name, code, capacity, hireFee, nextDate);
   }
 
   public boolean isSameCode(String venueToCompare) {
