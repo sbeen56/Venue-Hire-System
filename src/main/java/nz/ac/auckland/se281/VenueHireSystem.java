@@ -118,7 +118,9 @@ public class VenueHireSystem {
   }
 
   public void addServiceMusic(String bookingReference) {
-    if (!bookingReferenceExists(bookingReference)) {
+    if (bookingReferenceExists(bookingReference)) {
+      MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
+    } else {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
     }
   }
