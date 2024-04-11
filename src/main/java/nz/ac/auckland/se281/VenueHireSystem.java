@@ -280,11 +280,22 @@ public class VenueHireSystem {
     return false;
   }
 
-  private boolean bookingExists(String venueName) {
+  private boolean bookingExists(String venueCode) {
+    boolean bookingExists = false;
     for (Booking booking : bookingList) {
-      if (booking.getVenueName().equals(venueName)) {
-        return true;
+      for (Venue venue : venueList) {
+        if (venue.isSameCode(venueCode)) {
+          String venueName = venue.getName();
+          if (booking.getVenueName().equals(venueName)) {
+            MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
+                booking.getBookingReference(), booking.getBookingDate());
+            bookingExists = true;
+          }
+        }
       }
+    }
+    if (bookingExists) {
+      return true;
     }
     return false;
   }

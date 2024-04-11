@@ -22,4 +22,8 @@ public class Booking {
   public String getVenueName() {
     return venueName;
   }
+
+  public String getBookingReference() {
+    return bookingReference;
+  }
 }
