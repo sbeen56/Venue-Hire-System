@@ -135,7 +135,8 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    // TODO implement this method
+    MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage();
+    MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
   }
 
   private boolean isPositiveNumber(String stringToCheck, String propartyName) {
