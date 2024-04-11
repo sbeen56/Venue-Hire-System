@@ -18,4 +18,8 @@ public class Booking {
   public String getBookingDate() {
     return bookingDate;
   }
+
+  public String getVenueName() {
+    return venueName;
+  }
 }

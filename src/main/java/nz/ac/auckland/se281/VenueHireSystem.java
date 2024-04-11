@@ -94,7 +94,18 @@ public class VenueHireSystem {
   }
 
   public void printBookings(String venueCode) {
-    MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+    if (venueExists(venueCode)) {
+      if (!bookingExists(venueCode)) {
+        for (Venue venue : venueList) {
+          if (venue.isSameCode(venueCode)) {
+            String venueName = venue.getName();
+            MessageCli.PRINT_BOOKINGS_NONE.printMessage(venueName);
+          }
+        }
+      }
+    } else {
+      MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.printMessage(venueCode);
+    }
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
@@ -257,5 +268,24 @@ public class VenueHireSystem {
     }
 
     return nextAvailableDate;
+  }
+
+  private boolean venueExists(String venueCode) {
+    for (Venue venue : venueList) {
+      if (venue.isSameCode(venueCode)) {
+        MessageCli.PRINT_BOOKINGS_HEADER.printMessage(venue.getName());
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private boolean bookingExists(String venueName) {
+    for (Booking booking : bookingList) {
+      if (booking.getVenueName().equals(venueName)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
