@@ -22,7 +22,7 @@ public class VenueHireSystem {
       MessageCli.NUMBER_VENUES.printMessage(isOrAre, quantity, singularOrPlural);
 
       for (Venue venue : venueList) {
-        venue.printDetails(nextAvailableDate());
+        venue.printDetails(nextAvailableDate(venue.getName()));
       }
     }
   }
@@ -229,19 +229,22 @@ public class VenueHireSystem {
         dateToIncreaseYear++;
       }
     }
-
-    String nextDate = dateToIncreaseDay + "/" + dateToIncreaseMonth + "/" + dateToIncreaseYear;
-    return nextDate;
+    return String.format(
+        "%02d/%02d/%04d", dateToIncreaseDay, dateToIncreaseMonth, dateToIncreaseYear);
   }
 
-  private String nextAvailableDate() {
+  private String nextAvailableDate(String venueName) {
     boolean dateAvailability = false;
     String nextAvailableDate = systemDate;
+
+    if (bookingList == null) {
+      return systemDate;
+    }
 
     while (!dateAvailability) {
       dateAvailability = true;
       for (Booking booking : bookingList) {
-        if (booking.getBookingDate().equals(nextAvailableDate)) {
+        if (booking.isSameBooking(venueName, nextAvailableDate)) {
           dateAvailability = false;
           nextAvailableDate = increaseDate(nextAvailableDate);
           break;
