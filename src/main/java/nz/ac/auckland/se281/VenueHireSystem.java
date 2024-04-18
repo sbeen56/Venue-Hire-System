@@ -167,9 +167,33 @@ public class VenueHireSystem {
               booking.getBookingDate(),
               booking.getAttendees(),
               booking.getVenueName());
-          MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
+
+          int totalCost = 0;
+
+          for (Venue venue : venueList) {
+            if (venue.getName().equals(booking.getVenueName())) {
+              totalCost += Integer.parseInt(venue.getHireFee());
+              MessageCli.INVOICE_CONTENT_VENUE_FEE.printMessage(venue.getHireFee());
+            }
+          }
+
+          for (Service service : serviceList) {
+            if (service.getBookingReference().equals(bookingReference)) {
+              totalCost += service.cost();
+
+              if (service instanceof Catering) {
+                Catering catering = (Catering) service;
+                MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
+                    catering.getTypeName(), Integer.toString(service.cost()));
+              }
+
+              MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
+            }
+          }
         }
       }
+
+      MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
     } else {
       MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
     }

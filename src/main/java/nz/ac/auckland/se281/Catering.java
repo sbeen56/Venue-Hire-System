@@ -10,6 +10,10 @@ public class Catering extends Service {
     this.type = type;
   }
 
+  public String getTypeName() {
+    return type.getName();
+  }
+
   @Override
   public int cost() {
     return Integer.parseInt(getAttendees()) * type.getCostPerPerson();

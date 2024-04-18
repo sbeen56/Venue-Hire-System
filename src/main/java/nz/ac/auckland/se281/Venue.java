@@ -28,4 +28,8 @@ public class Venue {
   public int getCapacity() {
     return Integer.parseInt(capacity);
   }
+
+  public String getHireFee() {
+    return hireFee;
+  }
 }
