@@ -16,6 +16,6 @@ public class Floral extends Service {
 
   @Override
   public int cost() {
-    return Integer.parseInt(getAttendees()) * type.getCost();
+    return type.getCost();
   }
 }
