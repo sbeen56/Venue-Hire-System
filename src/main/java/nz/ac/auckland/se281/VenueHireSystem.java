@@ -86,7 +86,9 @@ public class VenueHireSystem {
           MessageCli.BOOKING_ATTENDEES_ADJUSTED.printMessage(
               options[3], Integer.toString(attendees), Integer.toString(venueCapacity));
         }
-        Booking newBooking = new Booking(venueName, bookingReference, options[1]);
+        Booking newBooking =
+            new Booking(
+                venueName, bookingReference, options[1], options[2], Integer.toString(attendees));
         bookingList.add(newBooking);
         MessageCli.MAKE_BOOKING_SUCCESSFUL.printMessage(
             bookingReference, venueName, options[1], Integer.toString(attendees));
@@ -111,8 +113,13 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     if (bookingReferenceExists(bookingReference)) {
-      Service newService = new Catering(bookingReference);
-      serviceList.add(newService);
+      for (Booking booking : bookingList) {
+        if (booking.getBookingReference().equals(bookingReference)) {
+          Catering newService =
+              new Catering(bookingReference, booking.getAttendees(), cateringType);
+          serviceList.add(newService);
+        }
+      }
       String service = "Catering (" + cateringType.getName() + ")";
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(service, bookingReference);
     } else {
@@ -122,8 +129,12 @@ public class VenueHireSystem {
 
   public void addServiceMusic(String bookingReference) {
     if (bookingReferenceExists(bookingReference)) {
-      Service newService = new Music(bookingReference);
-      serviceList.add(newService);
+      for (Booking booking : bookingList) {
+        if (booking.getBookingReference().equals(bookingReference)) {
+          Music newService = new Music(bookingReference, booking.getAttendees());
+          serviceList.add(newService);
+        }
+      }
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
     } else {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
@@ -132,8 +143,12 @@ public class VenueHireSystem {
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
     if (bookingReferenceExists(bookingReference)) {
-      Service newService = new Floral(bookingReference);
-      serviceList.add(newService);
+      for (Booking booking : bookingList) {
+        if (booking.getBookingReference().equals(bookingReference)) {
+          Floral newService = new Floral(bookingReference, booking.getAttendees(), floralType);
+          serviceList.add(newService);
+        }
+      }
       String service = "Floral (" + floralType.getName() + ")";
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(service, bookingReference);
     } else {
@@ -142,8 +157,22 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage();
-    MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
+    if (bookingReferenceExists(bookingReference)) {
+      for (Booking booking : bookingList) {
+        if (booking.getBookingReference().equals(bookingReference)) {
+          MessageCli.INVOICE_CONTENT_TOP_HALF.printMessage(
+              bookingReference,
+              booking.getEmail(),
+              systemDate,
+              booking.getBookingDate(),
+              booking.getAttendees(),
+              booking.getVenueName());
+          MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
+        }
+      }
+    } else {
+      MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
+    }
   }
 
   private boolean isPositiveNumber(String stringToCheck, String propartyName) {
