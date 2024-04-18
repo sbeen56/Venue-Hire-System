@@ -8,6 +8,7 @@ public class VenueHireSystem {
   private ArrayList<Venue> venueList = new ArrayList<Venue>();
   private String systemDate;
   private ArrayList<Booking> bookingList = new ArrayList<Booking>();
+  private ArrayList<Service> serviceList = new ArrayList<Service>();
 
   public VenueHireSystem() {}
 
@@ -110,6 +111,8 @@ public class VenueHireSystem {
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
     if (bookingReferenceExists(bookingReference)) {
+      Service newService = new Catering(bookingReference);
+      serviceList.add(newService);
       String service = "Catering (" + cateringType.getName() + ")";
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(service, bookingReference);
     } else {
@@ -119,6 +122,8 @@ public class VenueHireSystem {
 
   public void addServiceMusic(String bookingReference) {
     if (bookingReferenceExists(bookingReference)) {
+      Service newService = new Music(bookingReference);
+      serviceList.add(newService);
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage("Music", bookingReference);
     } else {
       MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.printMessage("Music", bookingReference);
@@ -127,6 +132,8 @@ public class VenueHireSystem {
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
     if (bookingReferenceExists(bookingReference)) {
+      Service newService = new Floral(bookingReference);
+      serviceList.add(newService);
       String service = "Floral (" + floralType.getName() + ")";
       MessageCli.ADD_SERVICE_SUCCESSFUL.printMessage(service, bookingReference);
     } else {
