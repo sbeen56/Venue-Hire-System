@@ -169,7 +169,6 @@ public class VenueHireSystem {
               booking.getVenueName());
 
           int totalCost = 0;
-
           for (Venue venue : venueList) {
             if (venue.getName().equals(booking.getVenueName())) {
               totalCost += Integer.parseInt(venue.getHireFee());
@@ -180,26 +179,25 @@ public class VenueHireSystem {
           for (Service service : serviceList) {
             if (service.getBookingReference().equals(bookingReference)) {
               totalCost += service.cost();
-
               if (service instanceof Catering) {
                 Catering catering = (Catering) service;
                 MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
                     catering.getTypeName(), Integer.toString(service.cost()));
-              } else if (service instanceof Music) {
+              }
+              if (service instanceof Music) {
                 MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(
                     Integer.toString(service.cost()));
-              } else if (service instanceof Floral) {
-                Floral floral = (Floral) service;
-                MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(floral.getType());
               }
-
-              MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
+              if (service instanceof Floral) {
+                Floral floral = (Floral) service;
+                MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(
+                    floral.getTypeName(), Integer.toString(service.cost()));
+              }
             }
           }
+          MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage(Integer.toString(totalCost));
         }
       }
-
-      MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
     } else {
       MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.printMessage(bookingReference);
     }

@@ -10,7 +10,7 @@ public class Floral extends Service {
     this.type = type;
   }
 
-  public String getType() {
+  public String getTypeName() {
     return type.getName();
   }
 
