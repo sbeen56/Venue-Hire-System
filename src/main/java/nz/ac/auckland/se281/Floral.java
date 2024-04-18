@@ -10,6 +10,10 @@ public class Floral extends Service {
     this.type = type;
   }
 
+  public String getType() {
+    return type.getName();
+  }
+
   @Override
   public int cost() {
     return Integer.parseInt(getAttendees()) * type.getCost();

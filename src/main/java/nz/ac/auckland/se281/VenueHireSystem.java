@@ -185,6 +185,12 @@ public class VenueHireSystem {
                 Catering catering = (Catering) service;
                 MessageCli.INVOICE_CONTENT_CATERING_ENTRY.printMessage(
                     catering.getTypeName(), Integer.toString(service.cost()));
+              } else if (service instanceof Music) {
+                MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.printMessage(
+                    Integer.toString(service.cost()));
+              } else if (service instanceof Floral) {
+                Floral floral = (Floral) service;
+                MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.printMessage(floral.getType());
               }
 
               MessageCli.INVOICE_CONTENT_BOTTOM_HALF.printMessage();
