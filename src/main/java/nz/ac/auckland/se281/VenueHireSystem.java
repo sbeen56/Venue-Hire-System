@@ -240,7 +240,9 @@ public class VenueHireSystem {
   // isPositiveNumber is a method that checks if a string represents a positive number
   private boolean isPositiveNumber(String stringToCheck, String propartyName) {
     try {
+      // Converts string number to integer number
       int parsedNumber = Integer.parseInt(stringToCheck);
+      // If number is negative return false
       if (parsedNumber <= 0) {
         MessageCli.VENUE_NOT_CREATED_INVALID_NUMBER.printMessage(propartyName, " positive");
         return false;
@@ -263,12 +265,15 @@ public class VenueHireSystem {
 
   // getQuantityString is a method that gets the appropriate quantity string for venue count
   private String getQuantityString(int venueListSize) {
+    // If number is smaller than 10, change number to quantity string
     if (venueListSize < 10) {
+      // Make list that has quantity strings between one to nine
       String[] numberNames = {
         "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
       };
       return numberNames[venueListSize - 1];
     } else {
+      // If number is not smaller than 10, don't change
       return Integer.toString(venueListSize);
     }
   }
@@ -358,7 +363,7 @@ public class VenueHireSystem {
     int dateToIncreaseMonth = Integer.parseInt(dateToIncreaseParts[1]);
     int dateToIncreaseYear = Integer.parseInt(dateToIncreaseParts[2]);
 
-    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30};
+    int[] daysInMonth = {31, 28, 31, 30, 31, 30, 31, 30, 31, 30, 31, 30};
 
     // Increase in order of day to month to year
     dateToIncreaseDay++;
@@ -417,6 +422,7 @@ public class VenueHireSystem {
       for (Venue venue : venueList) {
         if (venue.isSameCode(venueCode)) {
           String venueName = venue.getName();
+          // Compare venue name found by venue code and venue name in booking list
           if (booking.getVenueName().equals(venueName)) {
             MessageCli.PRINT_BOOKINGS_ENTRY.printMessage(
                 booking.getBookingReference(), booking.getBookingDate());
@@ -425,6 +431,7 @@ public class VenueHireSystem {
         }
       }
     }
+    // if booking exists return true
     if (bookingExists) {
       return true;
     }
